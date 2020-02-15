@@ -19,6 +19,8 @@ const processJSON = (data) => {
 	
     }
 
+    if(data === null) return ["div.json-val-null", "∅"];
+
     if(typeof data == "object") {
 
 	return ["div.json-val-object", ...Object.entries(data).map(([k,v]) => {
