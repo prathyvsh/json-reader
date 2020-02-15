@@ -139,6 +139,13 @@ margin: 0.25rem;
 
 }
 
+details summary {
+    outline: 0;
+    cursor: pointer;
+    user-select: none;
+}
+
+
 .json-val-null {
 
     background: #F8F8F8;

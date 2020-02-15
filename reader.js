@@ -25,8 +25,8 @@ const processJSON = (data) => {
 
 	return ["div.json-val-object", ...Object.entries(data).map(([k,v]) => {
 
-	    return ["div.json-val-object-kv",
-		    ["div.json-val-object-key", k],
+	    return ["details.json-val-object-kv", {open: true},
+		    ["summary.json-val-object-key", k],
 		    ["div.json-val-object-val", processJSON(v)]];
 	    
 	})];
