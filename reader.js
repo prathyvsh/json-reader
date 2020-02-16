@@ -83,7 +83,7 @@ const drawUI = async () => {
     await render("#app", ["div#reader-and-preview",
 			  ["div#reader",
 			   ["p#info", "Enter your JSON data:"],
-			   ["textarea", {autocomplete: "off", value: input}, input]],
+			   ["textarea", input]],
 			  ["div#preview"]])
 
     $("#reader").addEventListener("input", () => {
