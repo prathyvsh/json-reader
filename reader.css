@@ -63,7 +63,14 @@ body {
 #reader {
     background: #F5F5F4;
     display: grid;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: auto 1fr auto;
+}
+
+#reader .info {
+    padding: 1rem;
+    font-size: 0.875rem;
+    font-weight: bold;
+    
 }
 
 #reader textarea {

@@ -71,7 +71,8 @@ const drawUI = async () => {
     
     await render("#app", ["div#reader-and-preview",
 			  ["div#reader",
-			   ["textarea", `{"marketplace": "Nisarga",
+			   ["p.info", "Enter your JSON data:"],
+			   ["textarea", `{"supermarket": "Nisarga",
  "items": [{"title": "Ellunda",
 	 "count": 30},
 	 {"title": "Kappalandi Mittayi",
