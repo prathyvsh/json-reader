@@ -28,6 +28,10 @@ body {
 
 }
 
+#main-header h1 strong {
+    font-weight: 500;
+}
+
 #main-header h2 {
     font-weight: normal;
     font-size: 0.875rem;
