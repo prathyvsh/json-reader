@@ -48,20 +48,25 @@ const generatePreview = (zaharDatastructure) => {
 
 let JSONVal = () => {
 
-    warning.style.opacity = 0;
     let val = document.querySelector("#reader textarea").value;
 
     try {
 	
+	info.className = "";
+
+	info.textContent = "Enter your JSON Data:";
+
 	let data = JSON.parse(val);
 
 	generatePreview(processJSON(data));
 
     } catch (err) {
 
-	let warning = document.querySelector("#warning");
-	warning.style.opacity = 1;
-	warning.textContent = err.toString();
+	let info = document.querySelector("#info");
+
+	info.className += "warning";
+
+	info.textContent = err.toString();
 	
     }
 
@@ -71,14 +76,12 @@ const drawUI = async () => {
     
     await render("#app", ["div#reader-and-preview",
 			  ["div#reader",
-			   ["p.info", "Enter your JSON data:"],
+			   ["p#info", "Enter your JSON data:"],
 			   ["textarea", `{"supermarket": "Nisarga",
  "items": [{"title": "Ellunda",
 	 "count": 30},
 	 {"title": "Kappalandi Mittayi",
-	 "count": 40}]}`],
-			   ["div#warning"]
-			  ],
+	 "count": 40}]}`]],
 			  ["div#preview"]])
 
     JSONVal();
