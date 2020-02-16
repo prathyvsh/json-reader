@@ -73,18 +73,18 @@ let JSONVal = () => {
 }
 
 const drawUI = async () => {
+
+    const input = `{"supermarket": "Nisarga",
+ "items": [{"title": "Ellunda",
+	 "count": 30},
+	 {"title": "Kappalandi Mittayi",
+	 "count": 40}]}`;
     
     await render("#app", ["div#reader-and-preview",
 			  ["div#reader",
 			   ["p#info", "Enter your JSON data:"],
-			   ["textarea", `{"supermarket": "Nisarga",
- "items": [{"title": "Ellunda",
-	 "count": 30},
-	 {"title": "Kappalandi Mittayi",
-	 "count": 40}]}`]],
+			   ["textarea", {autocomplete: "off", value: input}, input]],
 			  ["div#preview"]])
-
-    JSONVal();
 
     $("#reader").addEventListener("input", () => {
 	
@@ -94,5 +94,11 @@ const drawUI = async () => {
 
 }
 
+window.addEventListener("load", async () => {
 
-drawUI();
+    await drawUI();
+    JSONVal();
+
+});
+
+
