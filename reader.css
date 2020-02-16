@@ -136,6 +136,7 @@ body {
     border-radius: 2px;
     padding: 0.5rem;
     margin: 0.25rem;
+    word-break: break-word;
 
 }
 
