@@ -1,11 +1,11 @@
-import { $, render } from "./z.js";
+import { $, $all, render } from "./z.js";
 
 const samples = [
     [1,2,3,[1,2,3],[2,3,"hello"]],
     [[true,false,true,false],[true,false,true,false]]
 ];
 
-const processJSON = (data) => {
+const processJSON = (data, ctx) => {
 
     if(typeof data == "number") return ["div.json-val-number", data];
 
@@ -15,7 +15,13 @@ const processJSON = (data) => {
 
     if(data instanceof Array) {
 
-	return ["div.json-val-array", ...data.map(d => processJSON(d))];
+	return ["div.json-val-array", ...data.map((d, i) => {
+	    
+	    let newCtx = ctx.concat(i);
+
+	    return processJSON(d, newCtx);
+
+	})];
 	
     }
 
@@ -25,9 +31,11 @@ const processJSON = (data) => {
 
 	return ["div.json-val-object", ...Object.entries(data).map(([k,v]) => {
 
+	    let newCtx = ctx.concat(k);
+
 	    return ["details.json-val-object-kv", {open: true},
-		    ["summary.json-val-object-key", k],
-		    ["div.json-val-object-val", processJSON(v)]];
+		    ["summary.json-val-object-key", k, ["a.explore", {href: "/?data=" + encodeURIComponent(JSON.stringify(data)) + "&path=" + encodeURIComponent(newCtx.join("."))}, "→"]],
+		    ["div.json-val-object-val", processJSON(v, newCtx)]];
 	    
 	})];
 
@@ -35,15 +43,20 @@ const processJSON = (data) => {
 
     return "";
 
-
-
-
 };
 
 const generatePreview = (zaharDatastructure) => {
 
     render("#preview", zaharDatastructure);
     
+};
+
+const setURLData = (data) => {
+
+    let path = new URLSearchParams(window.location.search).get("path") || "/";
+
+    window.history.pushState({},"", "/?data=" + encodeURIComponent(JSON.stringify(data)) + "&path=" + path);
+
 }
 
 let JSONVal = () => {
@@ -54,11 +67,13 @@ let JSONVal = () => {
 	
 	info.className = "";
 
-	info.textContent = "Enter your JSON Data:";
+	info.textContent = "Edit JSON Data:";
 
 	let data = JSON.parse(val);
 
-	generatePreview(processJSON(data));
+	setURLData(data);
+
+	generatePreview(processJSON(data, []));
 
     } catch (err) {
 
@@ -70,33 +85,60 @@ let JSONVal = () => {
 	
     }
 
-}
+};
 
-const drawUI = async () => {
+const drawUI = async (data, path) => {
 
-    const input = `{"supermarket": "Nisarga",
- "items": [{"title": "Ellunda",
-	 "count": 30},
-	 {"title": "Kappalandi Mittayi",
-	 "count": 40}]}`;
-    
+    console.log(data);
+
+    const selectPath = (data, path) => (path || "").split(".").reduce((i,n) => i[n], data) || data;
+
+    const selectedInput = selectPath(data, path);
+
+    const pathSegs = (path || "").split(".").reduce((i, n) => {
+
+	let lastEl = i[i.length - 1];
+	
+	let newArr = i.concat(lastEl ? [[n, lastEl + "." + n]] : [[n,n]]);
+
+	return newArr;
+
+    }, []);
+
+
+    const pathItems = pathSegs.map(([key, val]) => ["li", key]);
+
+
     await render("#app", ["div#reader-and-preview",
 			  ["div#reader",
+			   // ["nav#panels",
+			    // ["ul", ["li", "Data"], ["li", "Scheme"]]],
 			   ["p#info", "Enter your JSON data:"],
-			   ["textarea", input]],
-			  ["div#preview"]])
+			   ["textarea", JSON.stringify(selectedInput)]],
+			  ["div#preview-with-nav",
+			   ["nav#data-navigation", ["ul", ["li", "/"], ...pathItems]],
+			   ["div#preview"]]]);
 
     $("#reader").addEventListener("input", () => {
 	
 	JSONVal();
 
-    })
+    });
+
+    [...$all(".explore")].map(node => node.addEventListener("click", (evt) => {
+
+	console.log("Open" + evt.target.href);
+	
+    }));
 
 }
 
 window.addEventListener("load", async () => {
 
-    await drawUI();
+    let data = new URLSearchParams(window.location.search).get("data");
+    let JSONData = JSON.parse(decodeURIComponent(data));
+    let path = new URLSearchParams(window.location.search).get("path");
+    await drawUI(JSONData, path);
     JSONVal();
 
 });

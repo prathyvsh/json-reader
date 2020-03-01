@@ -101,6 +101,7 @@ body {
     background: #F8F8F8;
     padding: 1rem;
     width: 100%;
+    height: 100%;
     box-sizing: border-box;
 }
 
@@ -153,6 +154,10 @@ details summary {
     outline: 0;
     cursor: pointer;
     user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 1rem;
 }
 
 
@@ -211,6 +216,73 @@ details summary {
     padding: 0.5rem;
     border-radius: 2px;
     margin: 0.5rem;
+    margin-bottom: 1rem;
     box-sizing: border-box;
 }
 
+.json-val-object-kv:last-child {
+    margin-bottom: 0.5rem;
+}
+
+.json-val-object-val {
+    margin-top: 0.75rem;
+}
+
+nav {
+    background: #E8E4E1;
+}
+
+nav ul {
+    list-style: none;
+}
+
+#data-navigation ul {
+
+    display: flex;
+    flex-flow: row;
+    padding: 0.5rem 0;
+    align-items: flex-start;
+    
+}
+
+#data-navigation ul li:first-child,
+{
+    margin-left: 0;
+}
+
+#data-navigation ul li:last-child {
+    margin-right: 0;
+}
+
+#data-navigation ul li {
+    color: #75rem;
+    padding: 0.5rem 0.5rem;
+    margin: 0 0.25rem;
+}
+
+#data-navigation ul li:hover {
+
+    cursor: pointer;
+    background: #7E7367;
+    color: white;
+    border-radius: 2px;
+    
+}
+
+a.explore {
+    color: #E8E4E1;
+    background: #7E7367CC;
+    text-decoration: none;
+    font-weight: bold;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+#preview-with-nav {
+    display: flex;
+    flex-flow: column;
+}
