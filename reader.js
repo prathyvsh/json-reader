@@ -34,7 +34,7 @@ const processJSON = (data, ctx) => {
 	    let newCtx = ctx.concat(k);
 
 	    return ["details.json-val-object-kv", {open: true},
-		    ["summary.json-val-object-key", k, ["a.explore", {href: "/?data=" + encodeURIComponent(JSON.stringify(data)) + "&path=" + encodeURIComponent(newCtx.join("."))}, "→"]],
+		    ["summary.json-val-object-key", k, ["a.explore", {href: "./?data=" + encodeURIComponent(JSON.stringify(data)) + "&path=" + encodeURIComponent(newCtx.join("."))}, "→"]],
 		    ["div.json-val-object-val", processJSON(v, newCtx)]];
 	    
 	})];
