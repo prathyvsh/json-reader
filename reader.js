@@ -55,7 +55,7 @@ const setURLData = (data) => {
 
     let path = new URLSearchParams(window.location.search).get("path") || "/";
 
-    window.history.pushState({},"", "/?data=" + encodeURIComponent(JSON.stringify(data)) + "&path=" + path);
+    window.history.pushState({},"", "./?data=" + encodeURIComponent(JSON.stringify(data)) + "&path=" + path);
 
 }
 
